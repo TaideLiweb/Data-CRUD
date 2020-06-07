@@ -4,7 +4,7 @@ import DataValue from './dataValue'
 
 function DataTable(props) {
   const {
-    newData,
+    data,
     modify,
     deletData,
     changeDataName,
@@ -15,7 +15,7 @@ function DataTable(props) {
     <div>
       <DataTitle />
       <DataValue
-        newData={newData}
+        data={data}
         modify={modify}
         deletData={deletData}
         changeDataName={changeDataName}

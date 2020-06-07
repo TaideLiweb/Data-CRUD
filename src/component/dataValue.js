@@ -2,7 +2,7 @@ import React from 'react'
 
 function DataValue(props) {
   const {
-    newData,
+    data,
     modify,
     deletData,
     changeDataName,
@@ -10,8 +10,11 @@ function DataValue(props) {
     changeDataEmail,
   } = props
 
-  let dataVal = newData.map((Val, index) => (
-    <div className="dataFlex">
+
+  return( 
+  <div>{
+    data.map((Val, index) => (
+    <div className="dataFlex" key = {index}>
       <div>
         <input
           data-index={index}
@@ -44,7 +47,8 @@ function DataValue(props) {
       </div>
     </div>
   ))
-  return <div>{dataVal}</div>
+}
+  </div>)
 }
 
 export default DataValue

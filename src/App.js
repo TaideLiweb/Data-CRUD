@@ -1,4 +1,3 @@
-// import React from 'react';
 import './App.css'
 import React, { useState, useEffect } from 'react'
 import DataTable from './component/dataTable'
@@ -27,20 +26,28 @@ function App() {
     // }
     // console.log(box)
   }
+  const updateData = (e) => {
 
-  let upDateData = (e) => {
     data.push(inputDatas)
-    setnewData([...data])
+    setData([...data])
+    
   }
 
   function deletData(dataIndex) {
-    let preDelet = [...newData]
+    let preDelet = [...data]
     let index = dataIndex.target.getAttribute('data-index')
     preDelet.splice(index, 1)
-    data.splice(index, 1)
-    setnewData([...preDelet])
+    setData([...preDelet])
     console.log(index)
   }
+  // function deletData(dataIndex) {
+  //   let preDelet = [...newData]
+  //   let index = dataIndex.target.getAttribute('data-index')
+  //   preDelet.splice(index, 1)
+  //   data.splice(index, 1)
+  //   setnewData([...preDelet])
+  //   console.log(index)
+  // }
 
   function changeDataName(dataIndex) {
     let preChange = [...newData]
@@ -112,13 +119,13 @@ function App() {
             </div>
           </div>
           <div>
-            <input className="submitBtn" type="submit" value="送出" onClick={upDateData}></input>
+            <input className="submitBtn" type="submit" value="送出" onClick={updateData}></input>
           </div>
           <iframe id="id_iframe" name="nm_iframe" style={{ display: 'none' }}></iframe>
         </form>
       </div>
       <DataTable
-        newData={newData}
+        data={data}
         modify={modify}
         deletData={deletData}
         changeDataName={changeDataName}

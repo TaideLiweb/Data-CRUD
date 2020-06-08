@@ -1,16 +1,40 @@
-.inputFlex>div>input{height: 25px;padding: 5px;font-size: 14pt;outline: none; border: 0px; border-bottom: 1px solid gray;}
-.inputFlex{display:flex;}
-.inputFlex>div,.inputFlex>div>input{margin-left: 10px;}
-.inputFlex>div:first-child{margin-left: 0px;}
-.center{
+.inputFlex > div > input {
+  height: 25px;
+  padding: 5px;
+  font-size: 14pt;
+  outline: none;
+  border: 0px;
+  border-bottom: 1px solid gray;
+}
+.inputFlex {
+  display: flex;
+}
+.inputFlex > div,
+.inputFlex > div > input {
+  margin-left: 10px;
+}
+.inputFlex > div:first-child {
+  margin-left: 0px;
+}
+.center {
   max-width: 900px;
-  margin: 0 auto;}
-.dataTableTitle{padding: 30px 0 20px 0;border-bottom: 3px solid #000;}
-.dataTableTitle tr{display: flex;}
-.dataTableTitle tr td{width:265px}
+  margin: 0 auto;
+}
+.dataTableTitle {
+  padding: 30px 0 20px 0;
+  border-bottom: 3px solid #000;
+}
+.dataTableTitle tr {
+  display: flex;
+}
+.dataTableTitle tr td {
+  width: 265px;
+}
 /* .dataTableTitle tr td{flex-grow: 1;} */
-.dataFlex{display:flex;}
-.submitBtn{
+.dataFlex {
+  display: flex;
+}
+.submitBtn {
   margin-top: 30px;
   border-radius: 2.5em;
   cursor: pointer;
@@ -23,26 +47,43 @@
   border: skyblue solid 1px;
   outline: none;
 }
-.dataFlex>div>input{height: 25px;padding: 5px;font-size: 14pt;outline: none; border: 0px; border-bottom: 1px solid gray;}
-.dataFlex>div{margin-left:35px;}
-.dataFlex>div:nth-child(1){margin-left:0px;}
-.dataFlex>div:nth-child(4){margin-top:10px;cursor: pointer;
+.dataFlex > div > input {
+  height: 25px;
+  padding: 5px;
+  font-size: 14pt;
+  outline: none;
+  border: 0px;
+  border-bottom: 1px solid gray;
+}
+.dataFlex > div {
+  margin-left: 35px;
+}
+.dataFlex > div:nth-child(1) {
+  margin-left: 0px;
+}
+.dataFlex > div:nth-child(4) {
+  margin-top: 10px;
+  cursor: pointer;
   border-radius: 2.5em;
   cursor: pointer;
   font-weight: 700;
   min-width: 3em;
   text-align: center;
   border: skyblue solid 1px;
-  margin-left:17px;}
-.dataFlex>div:nth-child(5){margin-top:10px;cursor: pointer;
+  margin-left: 17px;
+}
+.dataFlex > div:nth-child(5) {
+  margin-top: 10px;
+  cursor: pointer;
   border-radius: 2.5em;
   cursor: pointer;
   font-weight: 700;
   min-width: 3em;
   text-align: center;
   border: skyblue solid 1px;
-  margin-left:17px;}
-.dataFlex>div>input:disabled {
-  background-color:#fff;
+  margin-left: 17px;
+}
+.dataFlex > div > input:disabled {
+  background-color: #fff;
   border-bottom: 1px solid #fff;
 }

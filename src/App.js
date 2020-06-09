@@ -1,32 +1,64 @@
 import './App.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 import DataTable from './component/dataTable'
+import Title from './component/title'
 
 function App() {
-  let [inputDatas, setinputDatas] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
-  })
-  let [disabledTurn, SetDisabledTurn] = useState(true)
-  let [data, setData] = useState([])
+  const [data, setData] = useState([])
+  const [disabledOn, setDisabledOn] = useState(true)
 
+  const SignupForm = () => {
+    return (
+      <Formik
+        initialValues={{ Name: '', phoneNumber: '', email: '' }}
+        validationSchema={Yup.object({
+          Name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+          phoneNumber: Yup.number().typeError('Only number').required('Required'),
+          email: Yup.string().email('Invalid email address').required('Required'),
+        })}
+        onSubmit={(values) => {
+          data.push(values)
+          setData([...data])
+        }}
+      >
+        <Form className="flex height50">
+          <div>
+            <label htmlFor="Name">Name</label>
+            <Field name="Name" type="text" />
+            <p style={{ color: 'red' }}>
+              <ErrorMessage name="Name" />
+            </p>
+          </div>
+          <div>
+            <label htmlFor="phoneNumber">phoneNumbere</label>
+            <Field name="phoneNumber" type="text" />
+            <p style={{ color: 'red' }}>
+              <ErrorMessage name="phoneNumber" />
+            </p>
+          </div>
+          <div>
+            <label htmlFor="email">email</label>
+            <Field name="email" type="email" />
+            <p style={{ color: 'red' }}>
+              <ErrorMessage name="email" />
+            </p>
+          </div>
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
+    )
+  }
   function modify(dataIndex) {
-    let index = dataIndex.target.getAttribute('data-index')
-    SetDisabledTurn(!disabledTurn)
+    setDisabledOn(!disabledOn)
   }
-  const updateData = (e) => {
-    data.push(inputDatas)
-    setData([...data])
-  }
-
   function deletData(dataIndex) {
     let preDelet = [...data]
     let index = dataIndex.target.getAttribute('data-index')
     preDelet.splice(index, 1)
     setData([...preDelet])
   }
-
   function changeDataName(dataIndex) {
     let preChange = [...data]
     let index = dataIndex.target.getAttribute('data-index')
@@ -45,53 +77,10 @@ function App() {
     preChange.splice(index, 1, { ...preChange[index], email: dataIndex.target.value })
     setData([...preChange])
   }
-
   return (
     <div className="center">
-      <div>
-        <h1>Data-CRUD</h1>
-        <form action="" target="nm_iframe">
-          <div className="inputFlex">
-            <div>
-              <span>姓名</span>
-              <input
-                id="name"
-                type="text"
-                placeholder="請輸入姓名"
-                onChange={(e) => {
-                  setinputDatas({ ...inputDatas, name: e.target.value })
-                }}
-              ></input>
-            </div>
-            <div>
-              <span>電話</span>
-              <input
-                id="phoneNumber"
-                type="text"
-                placeholder="請輸入電話"
-                onChange={(e) => {
-                  setinputDatas({ ...inputDatas, phoneNumber: e.target.value })
-                }}
-              ></input>
-            </div>
-            <div>
-              <span>e-mail</span>
-              <input
-                id="email"
-                type="email"
-                placeholder="請輸入E-mail"
-                onChange={(e) => {
-                  setinputDatas({ ...inputDatas, email: e.target.value })
-                }}
-              ></input>
-            </div>
-          </div>
-          <div>
-            <input className="submitBtn" type="submit" value="送出" onClick={updateData}></input>
-          </div>
-        </form>
-        <iframe id="id_iframe" name="nm_iframe" style={{ display: 'none' }}></iframe>
-      </div>
+      <Title />
+      <SignupForm />
       <DataTable
         data={data}
         modify={modify}
@@ -99,7 +88,7 @@ function App() {
         changeDataName={changeDataName}
         changeDataPhoneNumber={changeDataPhoneNumber}
         changeDataEmail={changeDataEmail}
-        disabledTurn={disabledTurn}
+        disabledOn={disabledOn}
       />
     </div>
   )

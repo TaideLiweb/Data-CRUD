@@ -8,19 +8,18 @@ function DataValue(props) {
     changeDataName,
     changeDataPhoneNumber,
     changeDataEmail,
-    disabledTurn,
+    disabledOn,
   } = props
-
   return (
     <div>
       {data.map((Val, index) => (
-        <div className="dataFlex" key={index}>
+        <div className="flex" key={index}>
           <div>
             <input
               data-index={index}
-              value={Val.name}
+              value={Val.Name}
               onChange={changeDataName}
-              disabled={disabledTurn}
+              disabled={disabledOn}
             ></input>
           </div>
           <div>
@@ -28,7 +27,7 @@ function DataValue(props) {
               data-index={index}
               value={Val.phoneNumber}
               onChange={changeDataPhoneNumber}
-              disabled={disabledTurn}
+              disabled={disabledOn}
             ></input>
           </div>
           <div>
@@ -36,11 +35,11 @@ function DataValue(props) {
               data-index={index}
               value={Val.email}
               onChange={changeDataEmail}
-              disabled={disabledTurn}
+              disabled={disabledOn}
             ></input>
           </div>
           <div data-index={index} onClick={modify}>
-            {disabledTurn ? '修改' : '完成'}
+            {disabledOn ? '修改' : '完成'}
           </div>
           <div data-index={index} onClick={deletData}>
             刪除

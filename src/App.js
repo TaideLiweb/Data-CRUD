@@ -12,7 +12,7 @@ function App() {
   const SignupForm = () => {
     return (
       <Formik
-        initialValues={{ Name: '', phoneNumber: '', email: '' }}
+        initialValues={{ Name: '', phoneNumber: '', email: '' ,disabled:'true'}}
         validationSchema={Yup.object({
           Name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
           phoneNumber: Yup.number().typeError('Only number').required('Required'),
@@ -52,6 +52,11 @@ function App() {
   }
   function modify(dataIndex) {
     setDisabledturn(!disabledturn)
+    let preChange = [...data]
+    let index = dataIndex.target.getAttribute('data-index')
+    preChange.splice(index, 1, { ...preChange[index], disabled: disabledturn })
+    setData([...preChange])
+    
   }
   function deletData(dataIndex) {
     let preDelet = [...data]

@@ -19,7 +19,7 @@ function DataValue(props) {
               data-index={index}
               value={Val.Name}
               onChange={changeDataName}
-              disabled={disabledturn}
+              disabled={Val.disabled}
             ></input>
           </div>
           <div>
@@ -27,7 +27,7 @@ function DataValue(props) {
               data-index={index}
               value={Val.phoneNumber}
               onChange={changeDataPhoneNumber}
-              disabled={disabledturn}
+              disabled={Val.disabled}
             ></input>
           </div>
           <div>
@@ -35,11 +35,11 @@ function DataValue(props) {
               data-index={index}
               value={Val.email}
               onChange={changeDataEmail}
-              disabled={disabledturn}
+              disabled={Val.disabled}
             ></input>
           </div>
           <div data-index={index} onClick={modify}>
-            {disabledturn ? '修改' : '完成'}
+            {Val.disabled ? '修改' : '完成'}
           </div>
           <div data-index={index} onClick={deletData}>
             刪除

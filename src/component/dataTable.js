@@ -10,7 +10,7 @@ function DataTable(props) {
     changeDataName,
     changeDataPhoneNumber,
     changeDataEmail,
-    disabledOn,
+    disabledturn,
   } = props
   return (
     <div>
@@ -22,7 +22,7 @@ function DataTable(props) {
         changeDataName={changeDataName}
         changeDataPhoneNumber={changeDataPhoneNumber}
         changeDataEmail={changeDataEmail}
-        disabledOn={disabledOn}
+        disabledturn={disabledturn}
       />
     </div>
   )

@@ -7,7 +7,7 @@ import Title from './component/title'
 
 function App() {
   const [data, setData] = useState([])
-  const [disabledOn, setDisabledOn] = useState(true)
+  const [disabledturn, setDisabledturn] = useState(true)
 
   const SignupForm = () => {
     return (
@@ -51,7 +51,7 @@ function App() {
     )
   }
   function modify(dataIndex) {
-    setDisabledOn(!disabledOn)
+    setDisabledturn(!disabledturn)
   }
   function deletData(dataIndex) {
     let preDelet = [...data]
@@ -88,7 +88,7 @@ function App() {
         changeDataName={changeDataName}
         changeDataPhoneNumber={changeDataPhoneNumber}
         changeDataEmail={changeDataEmail}
-        disabledOn={disabledOn}
+        disabledturn={disabledturn}
       />
     </div>
   )

@@ -4,31 +4,27 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import DataTable from './component/dataTable'
 import Title from './component/title'
-
-function App() {
-  const [data, setData] = useState([])
-  const [disabledturn, setDisabledturn] = useState(true)
-
-  const SignupForm = () => {
+  const SignupForm = (props) => {
+    const { updateData, data } = props
+    const repeatName = data.map(val=>(val.name))
     return (
       <Formik
-        initialValues={{ Name: '', phoneNumber: '', email: '' ,disabled:'true'}}
+        initialValues={{ name: '', phoneNumber: '', email: '' ,disabled:true}}
         validationSchema={Yup.object({
-          Name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+          name: Yup.string().test('err','name is taken',(val)=>!repeatName.includes(val)).max(15, 'Must be 15 characters or less').required('Required'),
           phoneNumber: Yup.number().typeError('Only number').required('Required'),
           email: Yup.string().email('Invalid email address').required('Required'),
         })}
         onSubmit={(values) => {
-          data.push(values)
-          setData([...data])
+          updateData(values)
         }}
       >
         <Form className="flex height50">
           <div>
-            <label htmlFor="Name">Name</label>
-            <Field name="Name" type="text" />
+            <label htmlFor="name">Name</label>
+            <Field name="name" type="text" />
             <p style={{ color: 'red' }}>
-              <ErrorMessage name="Name" />
+              <ErrorMessage name="name" />
             </p>
           </div>
           <div>
@@ -50,6 +46,15 @@ function App() {
       </Formik>
     )
   }
+function App() {
+  const [data, setData] = useState([])
+  const [disabledturn, setDisabledturn] = useState(true)
+
+  function updateData(values){
+    data.push(values)
+    setData([...data])
+  }
+
   function modify(dataIndex) {
     setDisabledturn(!disabledturn)
     let preChange = [...data]
@@ -85,7 +90,7 @@ function App() {
   return (
     <div className="center">
       <Title />
-      <SignupForm />
+      <SignupForm updateData={updateData} data={data} />
       <DataTable
         data={data}
         modify={modify}

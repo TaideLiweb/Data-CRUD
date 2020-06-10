@@ -8,7 +8,6 @@ function DataValue(props) {
     changeDataName,
     changeDataPhoneNumber,
     changeDataEmail,
-    disabledturn,
   } = props
   return (
     <div>
@@ -17,7 +16,7 @@ function DataValue(props) {
           <div>
             <input
               data-index={index}
-              value={Val.Name}
+              value={Val.name}
               onChange={changeDataName}
               disabled={Val.disabled}
             ></input>

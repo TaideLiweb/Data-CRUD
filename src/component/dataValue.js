@@ -1,18 +1,12 @@
 import React from 'react'
 
 function DataValue(props) {
-  const {
-    data,
-    modify,
-    deletData,
-    changeDataName,
-    changeDataPhoneNumber,
-    changeDataEmail,
-  } = props
+  const { data, modify, deletData, changeDataName, changeDataPhoneNumber, changeDataEmail } = props
+
   return (
     <div>
       {data.map((Val, index) => (
-        <div className="flex" key={index}>
+        <div className="flex dataValue" key={index}>
           <div>
             <input
               data-index={index}
@@ -20,6 +14,7 @@ function DataValue(props) {
               onChange={changeDataName}
               disabled={Val.disabled}
             ></input>
+            <p>{Val.errMsg1}</p>
           </div>
           <div>
             <input
@@ -28,6 +23,7 @@ function DataValue(props) {
               onChange={changeDataPhoneNumber}
               disabled={Val.disabled}
             ></input>
+            <p>{Val.errMsg2}</p>
           </div>
           <div>
             <input
@@ -36,13 +32,14 @@ function DataValue(props) {
               onChange={changeDataEmail}
               disabled={Val.disabled}
             ></input>
+            <p>{Val.errMsg3}</p>
           </div>
-          <div data-index={index} onClick={modify}>
+          <button data-index={index} onClick={modify}>
             {Val.disabled ? '修改' : '完成'}
-          </div>
-          <div data-index={index} onClick={deletData}>
+          </button>
+          <button data-index={index} onClick={deletData}>
             刪除
-          </div>
+          </button>
         </div>
       ))}
     </div>

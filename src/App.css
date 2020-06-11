@@ -1,54 +1,55 @@
+.center {
+  max-width: 1150px;
+  margin: 0 auto;
+}
 .flex {
   display: flex;
+  align-items: center;
 }
 button {
   height: 23px;
+  outline: none;
 }
 p {
   margin: 0;
+  color: red;
 }
-.center {
-  max-width: 900px;
-  margin: 0 auto;
-}
-.height50 {
-  height: 50px;
-}
-/* .inputFlex > div > input {
+input {
+  width: 280px;
   height: 25px;
   padding: 5px;
   font-size: 14pt;
   outline: none;
   border: 0px;
   border-bottom: 1px solid gray;
+  background-color: #fff;
 }
-.inputFlex {
-  display: flex;
-}
-.inputFlex > div,
-.inputFlex > div > input {
-  margin-left: 10px;
-}
-.inputFlex > div:first-child {
-  margin-left: 0px;
+input:disabled {
+  background-color: #fff;
+  border-bottom: 1px solid #fff;
 }
 
-.dataTableTitle {
-  padding: 30px 0 20px 0;
-  border-bottom: 3px solid #000;
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
+  -webkit-text-fill-color: #000;
 }
-.dataTableTitle tr {
-  display: flex;
+
+/* -----signupForm------ */
+label {
+  display: block;
 }
-.dataTableTitle tr td {
-  width: 265px;
-} */
-/* .dataTableTitle tr td{flex-grow: 1;} */
-/* .dataFlex {
-  display: flex;
+
+.center > form > div {
+  width: 280px;
+  margin: 20px 50px 20px 0;
+  height: 80px;
+  align-items: center;
+}
+
+.center > form > div > input {
+  margin: 0 0 5px 0;
 }
 .submitBtn {
-  margin-top: 30px;
   border-radius: 2.5em;
   cursor: pointer;
   font-weight: 700;
@@ -57,46 +58,41 @@ p {
   text-align: center;
   min-width: 10em;
   background-color: white;
-  border: skyblue solid 1px;
-  outline: none;
+  border: skyblue solid 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.dataFlex > div > input {
-  height: 25px;
-  padding: 5px;
-  font-size: 14pt;
-  outline: none;
-  border: 0px;
-  border-bottom: 1px solid gray;
+/* -----dataTitle------ */
+.dataTitle {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #000;
 }
-.dataFlex > div {
-  margin-left: 35px;
+.dataTitle > div {
+  height: 40px;
+  width: 280px;
+  margin: 0 50px 0 0;
 }
-.dataFlex > div:nth-child(1) {
-  margin-left: 0px;
+/* -----dataValue------ */
+.dataValue {
+  height: 60px;
 }
-.dataFlex > div:nth-child(4) {
-  margin-top: 10px;
+.dataValue > div {
+  height: 40px;
+  width: 280px;
+  margin: 5px 50px 5px 0;
+}
+.dataValue > button {
+  height: 30px;
   cursor: pointer;
   border-radius: 2.5em;
   cursor: pointer;
   font-weight: 700;
-  min-width: 3em;
+  width: 80px;
   text-align: center;
-  border: skyblue solid 1px;
-  margin-left: 17px;
-}
-.dataFlex > div:nth-child(5) {
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 2.5em;
-  cursor: pointer;
-  font-weight: 700;
-  min-width: 3em;
-  text-align: center;
-  border: skyblue solid 1px;
-  margin-left: 17px;
-}
-.dataFlex > div > input:disabled {
   background-color: #fff;
-  border-bottom: 1px solid #fff;
-} */
+  border: skyblue solid 1px;
+  margin: 5px 0 5px 20px;
+}

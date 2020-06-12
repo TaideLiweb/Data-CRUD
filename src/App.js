@@ -7,31 +7,54 @@ import Title from './component/title'
 function App() {
   const [data, setData] = useState([])
   const [disabledturn, setDisabledturn] = useState(true)
-
+  const usedName = data.map((val) => val.name)
+  const counts = (arr, value) => arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0)
   function updateData(values) {
     data.push(values)
     setData([...data])
   }
-  //修改未填跳Required及無法點擊完成
-  function modify(dataIndex) {
+  console.log(disabledturn)
+  //修改空白跳Required & 無法點擊完成 & 驗證數字、email、重複姓名
+  function modify(e) {
     const preChange = [...data]
-    const index = dataIndex.target.getAttribute('data-index')
-    if (preChange[index].name.length === 0) {
+    const index = e.target.getAttribute('data-index')
+    if (
+      preChange[index].name.length === 0 &&
+      preChange[index].phoneNumber.length === 0 &&
+      preChange[index].email.length === 0
+    ) {
       preChange.splice(index, 1, {
         ...preChange[index],
         errMsg1: 'Required',
-      })
-      setData([...preChange])
-    } else if (preChange[index].phoneNumber.length === 0) {
-      preChange.splice(index, 1, {
-        ...preChange[index],
         errMsg2: 'Required',
+        errMsg3: 'Required',
       })
       setData([...preChange])
-    } else if (preChange[index].email.length === 0) {
+    } else if (
+      preChange[index].name.length === 0 ||
+      counts(usedName, preChange[index].name) === 2
+    ) {
       preChange.splice(index, 1, {
         ...preChange[index],
-        errMsg3: 'Required',
+        errMsg1: 'Required and name is tanken',
+      })
+      setData([...preChange])
+    } else if (
+      preChange[index].phoneNumber.length === 0 ||
+      !preChange[index].phoneNumber.match(/^[0-9]*$/)
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg2: 'Required and Only number',
+      })
+      setData([...preChange])
+    } else if (
+      preChange[index].email.length === 0 ||
+      !preChange[index].email.match(/^.+@[A-Za-z0-9_]+\..+$/)
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg3: 'Required and Invalid email address',
       })
       setData([...preChange])
     } else {
@@ -46,28 +69,32 @@ function App() {
       setData([...preChange])
     }
   }
-  function deletData(dataIndex) {
+  function deletData(e) {
     const preDelet = [...data]
-    const index = dataIndex.target.getAttribute('data-index')
+    const index = e.target.getAttribute('data-index')
     preDelet.splice(index, 1)
     setData([...preDelet])
   }
-  function changeDataName(dataIndex) {
+  function changeDataName(e) {
     const preChange = [...data]
-    const index = dataIndex.target.getAttribute('data-index')
-    preChange.splice(index, 1, { ...preChange[index], name: dataIndex.target.value })
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, { ...preChange[index], name: e.target.value, errMsg1: '' })
     setData([...preChange])
   }
-  function changeDataPhoneNumber(dataIndex) {
+  function changeDataPhoneNumber(e) {
     const preChange = [...data]
-    const index = dataIndex.target.getAttribute('data-index')
-    preChange.splice(index, 1, { ...preChange[index], phoneNumber: dataIndex.target.value })
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, {
+      ...preChange[index],
+      phoneNumber: e.target.value,
+      errMsg2: '',
+    })
     setData([...preChange])
   }
-  function changeDataEmail(dataIndex) {
+  function changeDataEmail(e) {
     const preChange = [...data]
-    const index = dataIndex.target.getAttribute('data-index')
-    preChange.splice(index, 1, { ...preChange[index], email: dataIndex.target.value })
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, { ...preChange[index], email: e.target.value, errMsg3: '' })
     setData([...preChange])
   }
   return (

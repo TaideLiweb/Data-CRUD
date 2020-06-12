@@ -9,6 +9,10 @@
 button {
   height: 23px;
   outline: none;
+  transition: all 0.3s;
+}
+button:hover {
+  background-color: rgb(224, 224, 224);
 }
 p {
   margin: 0;
@@ -95,4 +99,8 @@ label {
   background-color: #fff;
   border: skyblue solid 1px;
   margin: 5px 0 5px 20px;
+  transition: all 0.3s;
+}
+.dataValue > button:hover {
+  background-color: rgb(224, 224, 224);
 }

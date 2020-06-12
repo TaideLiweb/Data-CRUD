@@ -1,183 +1,121 @@
-// import React from 'react';
-import './App.css';
-import React, { useState, useEffect } from 'react';
-const Data = [];
-// const Data = [
-//   {
-//     name:'Ted',
-//     phoneNumber:'0912345678',
-//     email:'ted@gmail.com'
-//   },
-//   {
-//     name:'tony',
-//     phoneNumber:'091566578',
-//     email:'tony@gmail.com'
-//   },
-//   {
-//     name:'stanley',
-//     phoneNumber:'0911414678',
-//     email:'stanley@gmail.com'
-//   },
-//   {
-//     name:'barbie',
-//     phoneNumber:'0914255678',
-//     email:'barbie@gmail.com'
-//   }
-// ];
-
-function DataTableTitle(props){
-
-
-
-  let dataVal = props.newData.map((Val,index)=>
-    <div className="dataFlex">
-      <div>
-        <input data-index = {index} value = {Val.name} onChange = {props.changeDataName} disabled = {true} ></input>
-      </div>
-      <div>
-        <input data-index = {index} value = {Val.phoneNumber}  onChange = {props.changeDataPhoneNumber} disabled = {true}></input>
-      </div>
-      <div>
-        <input data-index = {index} value = {Val.email} onChange = {props.changeDataEmail} disabled = {true}></input>
-      </div>
-      <div data-index = {index} onClick = {props.modify}>修改</div>
-      <div data-index = {index} onClick = {props.deletData}>刪除</div>
-    </div>
-  )
-  
-  return (
-  <div>
-    <div className="dataTableTitle">
-      <tr>
-        <td>使用者姓名</td>
-        <td>使用者電話</td>
-        <td>使用者E-mail</td>
-      </tr>
-    </div>
-    <div>
-      {dataVal} 
-    </div>
-  </div>
-  )
-  
-}
+/* eslint-disable operator-linebreak */
+import './App.css'
+import React, { useState } from 'react'
+import SignupForm from './component/signupForm'
+import DataTable from './component/dataTable'
+import Title from './component/title'
 
 function App() {
- 
-  let [inputDatas,setinputDatas] =useState({
-    name:'',
-    phoneNumber:'',
-    email:''
-  });
-  let [newData,setnewData] =useState([]) 
-
-  function modify(e){
-    let index = e.target.getAttribute("data-index")
-    let div = document.getElementsByClassName('dataFlex')[index]
-    let box = div.getElementsByTagName('input')
-    if(box[0].disabled === true ){
-      box[0].disabled = false
-      box[1].disabled = false
-      box[2].disabled = false
-
-    }else {
-      box[0].disabled = true
-      box[1].disabled = true
-      box[2].disabled = true
-    } 
-    
-    
-    console.log(box)
+  const [data, setData] = useState([])
+  const [disabledturn, setDisabledturn] = useState(true)
+  const dataName = data.map((val) => val.name)
+  const usedName = (arr, value) => arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0)
+  function updateData(values) {
+    data.push(values)
+    setData([...data])
   }
-
-  let upData = (e)=>{
-    let phoneNumberPattern = new RegExp(/^09\d{8}$/);
-    let emailPattern = new RegExp(/^.*@gmail\.com$/);
-    let repeatName = Data.map(val=>val.name)
-    let inputName = document.getElementById('name')
-    let inputPhoneNumber = document.getElementById('phoneNumber')
-    let inputEmail = document.getElementById('email')
-    if(repeatName.includes(inputName.value)){
-      inputName.setCustomValidity("Name重複");
+  // 修改空白跳Required & 無法點擊完成 & 驗證數字、email、重複姓名
+  function modify(e) {
+    const preChange = [...data]
+    const index = e.target.getAttribute('data-index')
+    if (
+      preChange[index].name.length === 0 &&
+      preChange[index].phoneNumber.length === 0 &&
+      preChange[index].email.length === 0
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg1: 'Required',
+        errMsg2: 'Required',
+        errMsg3: 'Required',
+      })
+      setData([...preChange])
+    } else if (
+      preChange[index].name.length === 0 ||
+      usedName(dataName, preChange[index].name) === 2
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg1: 'Required and name is tanken',
+      })
+      setData([...preChange])
+    } else if (
+      preChange[index].phoneNumber.length === 0 ||
+      !preChange[index].phoneNumber.match(/^[0-9]*$/)
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg2: 'Required and Only number',
+      })
+      setData([...preChange])
+    } else if (
+      preChange[index].email.length === 0 ||
+      !preChange[index].email.match(/^.+@[A-Za-z0-9_]+\..+$/)
+    ) {
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        errMsg3: 'Required and Invalid email address',
+      })
+      setData([...preChange])
+    } else {
+      setDisabledturn(!disabledturn)
+      preChange.splice(index, 1, {
+        ...preChange[index],
+        disabled: disabledturn,
+        errMsg1: '',
+        errMsg2: '',
+        errMsg3: '',
+      })
+      setData([...preChange])
     }
-    else if(!inputEmail.value.match(emailPattern)){
-      inputEmail.setCustomValidity('email格式錯誤')
-      console.log(inputEmail.value)
-    }
-    else if(!inputPhoneNumber.value.match(phoneNumberPattern)){
-      inputPhoneNumber.setCustomValidity("請輸入開頭09的手機號碼");
-      console.log(inputPhoneNumber.value)
-    }
-    else {
-    Data.push(inputDatas)
-    setnewData([...Data])}
-
   }
-
-  function deletData(dataIndex){
-    let preDelet = [...newData]
-    let index = dataIndex.target.getAttribute("data-index")
-    preDelet.splice(index,1)
-    Data.splice(index,1)
-    setnewData([...preDelet])
-    console.log(index)
+  // 刪除該欄位
+  function deletData(e) {
+    const preDelet = [...data]
+    const index = e.target.getAttribute('data-index')
+    preDelet.splice(index, 1)
+    setData([...preDelet])
   }
-  function changeDataName(dataIndex){
-    let preChange = [...newData]
-    let index = dataIndex.target.getAttribute("data-index")
-    preChange.splice(index,1,{...preChange[index],name: dataIndex.target.value})
-    Data.splice(index,1,{...Data[index],name: dataIndex.target.value})
-    setnewData([...preChange])
-    console.log(preChange)
-    console.log(Data)
+  // 改變該欄位姓名
+  function changeDataName(e) {
+    const preChange = [...data]
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, { ...preChange[index], name: e.target.value, errMsg1: '' })
+    setData([...preChange])
   }
-  function changeDataPhoneNumber(dataIndex){
-    let preChange = [...newData]
-    let index = dataIndex.target.getAttribute("data-index")
-    preChange.splice(index,1,{...preChange[index],phoneNumber: dataIndex.target.value})
-    Data.splice(index,1,{...Data[index],phoneNumber: dataIndex.target.value})
-    setnewData([...preChange])
-    console.log(preChange)
+  // 改變該欄位電話
+  function changeDataPhoneNumber(e) {
+    const preChange = [...data]
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, {
+      ...preChange[index],
+      phoneNumber: e.target.value,
+      errMsg2: '',
+    })
+    setData([...preChange])
   }
-  function changeDataEmail(dataIndex){
-    let preChange = [...newData]
-    let index = dataIndex.target.getAttribute("data-index")
-    preChange.splice(index,1,{...preChange[index],email: dataIndex.target.value})
-    Data.splice(index,1,{...Data[index],email: dataIndex.target.value})
-    setnewData([...preChange])
-    console.log(preChange)
+  // 改變該欄位E-mail
+  function changeDataEmail(e) {
+    const preChange = [...data]
+    const index = e.target.getAttribute('data-index')
+    preChange.splice(index, 1, { ...preChange[index], email: e.target.value, errMsg3: '' })
+    setData([...preChange])
   }
-
   return (
     <div className="center">
-      <div>
-        <h1>Data-CRUD</h1>
-        <form action="" target = "nm_iframe">
-          <div className="inputFlex">
-            <div>
-              <span>姓名</span>
-              <input id="name" type="text" placeholder="請輸入姓名" onChange={e=>{setinputDatas({...inputDatas, name: e.target.value})}} required="required"></input>
-            </div>
-            <div>
-              <span>電話</span>
-              <input id="phoneNumber" type="text" placeholder="請輸入電話" onChange={e=>{setinputDatas({...inputDatas, phoneNumber: e.target.value})}} required="required"></input>
-            </div>
-            <div>
-              <span>e-mail</span>
-              <input id="email" type="email" placeholder="請輸入E-mail" onChange={e=>{setinputDatas({...inputDatas, email: e.target.value})}} required="required"></input>
-            </div>
-          </div>
-          <div>
-          <input className = "submitBtn" type="submit" value="送出" onClick={upData}></input>
-        </div>
-        <iframe id="id_iframe" name="nm_iframe" style={{display:"none"}}></iframe>
-        </form>
-      </div>
-      <DataTableTitle newData = {newData} modify = {modify} deletData = {deletData}
-       changeDataName = {changeDataName} changeDataPhoneNumber = {changeDataPhoneNumber} changeDataEmail = {changeDataEmail} />
+      <Title />
+      <SignupForm updateData={updateData} data={data} />
+      <DataTable
+        data={data}
+        modify={modify}
+        deletData={deletData}
+        changeDataName={changeDataName}
+        changeDataPhoneNumber={changeDataPhoneNumber}
+        changeDataEmail={changeDataEmail}
+        disabledturn={disabledturn}
+      />
     </div>
-    
-  );
+  )
 }
 
-export default App;
+export default App

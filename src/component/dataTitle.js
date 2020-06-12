@@ -1,5 +1,6 @@
 import React from 'react'
-function DataTitle(props) {
+
+function DataTitle() {
   return (
     <div>
       <div className="flex dataTitle">

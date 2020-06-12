@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Title(props) {
+function Title() {
   return (
     <div>
       <h1>CRUD-Data</h1>

@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import './App.css'
 import React, { useState } from 'react'
 import SignupForm from './component/signupForm'
@@ -7,14 +8,13 @@ import Title from './component/title'
 function App() {
   const [data, setData] = useState([])
   const [disabledturn, setDisabledturn] = useState(true)
-  const usedName = data.map((val) => val.name)
-  const counts = (arr, value) => arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0)
+  const dataName = data.map((val) => val.name)
+  const usedName = (arr, value) => arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0)
   function updateData(values) {
     data.push(values)
     setData([...data])
   }
-  console.log(disabledturn)
-  //修改空白跳Required & 無法點擊完成 & 驗證數字、email、重複姓名
+  // 修改空白跳Required & 無法點擊完成 & 驗證數字、email、重複姓名
   function modify(e) {
     const preChange = [...data]
     const index = e.target.getAttribute('data-index')
@@ -32,7 +32,7 @@ function App() {
       setData([...preChange])
     } else if (
       preChange[index].name.length === 0 ||
-      counts(usedName, preChange[index].name) === 2
+      usedName(dataName, preChange[index].name) === 2
     ) {
       preChange.splice(index, 1, {
         ...preChange[index],
@@ -69,18 +69,21 @@ function App() {
       setData([...preChange])
     }
   }
+  // 刪除該欄位
   function deletData(e) {
     const preDelet = [...data]
     const index = e.target.getAttribute('data-index')
     preDelet.splice(index, 1)
     setData([...preDelet])
   }
+  // 改變該欄位姓名
   function changeDataName(e) {
     const preChange = [...data]
     const index = e.target.getAttribute('data-index')
     preChange.splice(index, 1, { ...preChange[index], name: e.target.value, errMsg1: '' })
     setData([...preChange])
   }
+  // 改變該欄位電話
   function changeDataPhoneNumber(e) {
     const preChange = [...data]
     const index = e.target.getAttribute('data-index')
@@ -91,6 +94,7 @@ function App() {
     })
     setData([...preChange])
   }
+  // 改變該欄位E-mail
   function changeDataEmail(e) {
     const preChange = [...data]
     const index = e.target.getAttribute('data-index')

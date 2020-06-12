@@ -1,16 +1,23 @@
+/* eslint-disable object-curly-newline */
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 const SignupForm = (props) => {
   const { updateData, data } = props
-  const usedName = data.map((val) => val.name)
+  const dataName = data.map((val) => val.name)
   return (
     <Formik
-      initialValues={{ name: '', phoneNumber: '', email: '', disabled: true }}
+      initialValues={{
+        name: '',
+        phoneNumber: '',
+        email: '',
+        disabled: true,
+      }}
       validationSchema={Yup.object({
         name: Yup.string()
-          .test('usedName', 'name is taken', (val) => !usedName.includes(val))
+          .test('usedName', 'name is taken', (val) => !dataName.includes(val))
           .max(15, 'Must be 15 characters or less')
           .required('Required'),
         phoneNumber: Yup.number().typeError('Only number').required('Required'),
@@ -49,5 +56,8 @@ const SignupForm = (props) => {
     </Formik>
   )
 }
-
+SignupForm.propTypes = {
+  data: PropTypes.string.isRequired,
+  updateData: PropTypes.func.isRequired,
+}
 export default SignupForm

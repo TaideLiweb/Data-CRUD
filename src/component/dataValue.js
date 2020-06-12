@@ -1,4 +1,7 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/no-array-index-key */
 import React from 'react'
+import PropTypes from 'prop-types'
 
 function DataValue(props) {
   const { data, modify, deletData, changeDataName, changeDataPhoneNumber, changeDataEmail } = props
@@ -13,7 +16,7 @@ function DataValue(props) {
               value={Val.name}
               onChange={changeDataName}
               disabled={Val.disabled}
-            ></input>
+            />
             <p>{Val.errMsg1}</p>
           </div>
           <div>
@@ -22,7 +25,7 @@ function DataValue(props) {
               value={Val.phoneNumber}
               onChange={changeDataPhoneNumber}
               disabled={Val.disabled}
-            ></input>
+            />
             <p>{Val.errMsg2}</p>
           </div>
           <div>
@@ -31,13 +34,13 @@ function DataValue(props) {
               value={Val.email}
               onChange={changeDataEmail}
               disabled={Val.disabled}
-            ></input>
+            />
             <p>{Val.errMsg3}</p>
           </div>
-          <button data-index={index} onClick={modify}>
+          <button type="button" data-index={index} onClick={modify}>
             {Val.disabled ? '修改' : '完成'}
           </button>
-          <button data-index={index} onClick={deletData}>
+          <button type="button" data-index={index} onClick={deletData}>
             刪除
           </button>
         </div>
@@ -45,5 +48,12 @@ function DataValue(props) {
     </div>
   )
 }
-
+DataValue.propTypes = {
+  data: PropTypes.string.isRequired,
+  modify: PropTypes.func.isRequired,
+  deletData: PropTypes.func.isRequired,
+  changeDataName: PropTypes.func.isRequired,
+  changeDataPhoneNumber: PropTypes.func.isRequired,
+  changeDataEmail: PropTypes.func.isRequired,
+}
 export default DataValue
